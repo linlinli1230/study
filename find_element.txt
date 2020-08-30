@@ -1,0 +1,82 @@
+'''
+定位元素方法
+
+Created on 2020年6月11日
+
+@author: linlin
+
+'''
+from selenium.webdriver.common.by import By
+from selenium import webdriver
+driver=webdriver.Chrome()
+'''
+网页元素：
+<span class='s_ipt_wr'>
+    <input id='kw' class='s_ipt' name='wd' type='submit'>文本链接</input>
+    <input....></input>
+</span>
+
+'''
+#通过id='kw'
+driver.find_element_by_id('kw')
+driver.find_element(By.ID,'kw')
+#通过name='wd'
+driver.find_element_by_name('wd')
+driver.find_element(By.NAME,'wd')
+#通过类名class='s_ipt'
+driver.find_element_by_class_name('s_ipt')
+driver.find_element(By.CLASS_NAME,'s_ipt')
+#通过标签名<input ..> ... <input>
+driver.find_element_by_tag_name('input')
+driver.find_element(By.TAG_NAME,'input')
+#通过文本，专门用来定位文本链接
+driver.find_element_by_link_text('文本链接')
+driver.find_element(By.LINK_TEXT,'文本链接')
+#通过部分文本链接
+driver.find_element_by_partial_link_text('本链')
+driver.find_element(By.PARTIAL_LINK_TEXT, '本链')
+#通过xpath定位-----绝对路径定位
+driver.find_element_by_xpath('/html/body/div[3]/tr[2]/div/a')
+#通过xpath定位-----利用元素属性定位：可以不指定标签名，用*代替，可以是任意属性，不局限于id、name、class
+driver.file_element_by_xpath('//input[@id="kw"]')
+driver.file_element_by_xpath('//*[@type="submit"]')
+driver.find_element(By.XPATH,"//*[@type='submit']")
+#通过xpath定位-----层级与属性结合
+driver.file_element_by_xpath('//span[@class="s_ipt_er"]/input')
+#通过xpath定位----使用逻辑运算符
+driver.find_element_by_xpath("//input[@id='kw' and @name='wd']")
+#通过xpath定位-----使用contains方法：匹配属性中包含的字符串
+driver.find_element_by_xpath("//span[contains(@class,'s_ipt_wr')]/input")
+#通过xpath定位-----使用text（）方法
+driver.find_element_by_xpath("//input[text(),'文本链接']")
+#通过xpath定位-----contains和text（）配合使用
+driver.find_element_by_xpath("//input[contains(text(),'本链')]")
+#通过css选择器定位----class定位：. 表示class 's_ipt'表示class的属性
+driver.find_element_by_css_selector(".s_ipt")
+driver.find_element(By.CSS_SELECTOR,".s_ipt")
+#通过css选择器定位-----id定位：#表示id，‘kw’表示id的属性
+driver.find_element_by_css_selector("#kw")
+#通过css选择器定位-----标签名定位：不需要任何符号标识，直接使用标签名
+driver.find_element_by_css_selector("input")
+#通过css选择器定位-----标签层级关系定位
+driver.find_element_by_css_selector("span>input")
+#通过css选择器定位-----属性定位：属性可不加引号
+driver.find_element_by_css_selector("[name='wd']")
+#通过css选择器定位-----组合定位
+driver.find_element_by_css_selector("span.s_ipt_wr>input#kw")
+#通过css选择器定位------查找class属性包含‘s_ipt_wr’字符串的元素
+driver.find_element_by_css_selector("[class*=s_ipt_er]")
+#通过css选择器定位------查找class属性以‘s_’字符串开头的元素
+driver.find_element_by_css_selector("[class^=s_]")
+#通过css选择器定位-----查找class属性以‘wr’字符串结尾的元素
+driver.find_element_by_css_selector("[class$=wr]")
+#通过css选择器定位----查找标签span标签下面第2个input标签的元素
+driver.find_element_by_css_selector("span>input:nth-child(2)")
+
+
+#选择下拉框中的元素
+from selenium.webdriver.support.select import Select
+el=driver.find_element_by_class_name('model') #定位下拉框
+Select(el).select_by_value('Max3')  #选择下拉框中的值
+
+
